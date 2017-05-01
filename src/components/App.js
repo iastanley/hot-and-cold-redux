@@ -47,20 +47,38 @@ export default class App extends React.Component {
   }
 
   //generate response based on user's guess
-  generateFeedback(num) {
+  generateFeedback(guessNum) {
+    const num = Number(guessNum);
+
+    if(isNaN(num)) {
+      this.setState({
+        feedback: 'Not a valid input!'
+      });
+    }
+    else if(num > 100 || num <= 0) {
+      this.setState({
+        feedback: 'Number not between 1 and 100'
+      })
+    }
     //using double equals so type of input can be string
-    if(num === this.state.correctNumber) {
+    else if(num === this.state.correctNumber) {
       this.setState({
         feedback: 'Correct!'
       });
-      //put reset function here
-      // this.resetGame();
-    } else if(Math.abs(this.state.correctNumber - num) > 10) {
+    }
+    else if(Math.abs(this.state.correctNumber - num) > 10) {
       this.addPrevGuess(num);
       this.setState({
         feedback: 'cold'
       });
-    } else {
+    }
+    else if(Math.abs(this.state.correctNumber - num) > 5) {
+      this.addPrevGuess(num);
+      this.setState({
+        feedback: 'Warm'
+      });
+    }
+    else {
       this.addPrevGuess(num);
       this.setState({
         feedback: 'Hot!'

@@ -12,12 +12,12 @@ export default class GameBody extends React.Component {
   }//end of constructor
 
   handleChange(event) {
-    this.setState({input: Number(event.target.value.trim())});
+    this.setState({input: event.target.value.trim()});
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    if (typeof this.state.input === 'number' && this.props.onGuess) {
+    if (this.props.onGuess) {
       this.props.onGuess(this.state.input);
     }
     this.setState({input: ''});
