@@ -112,7 +112,7 @@ export default class App extends React.Component {
       <div className="app-container">
         <GameLink classes="game-link" text="What?"
         onClick={this.toggleInstructions} />
-        <GameLink classes="right game-link" text="+New Game"
+        <GameLink classes="right game-link" text="New Game"
         onClick={this.resetGame} />
         <h1 className="game-title">HOT or COLD</h1>
         <div className="game">
