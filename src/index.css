@@ -1,5 +1,92 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 20px;
   font-family: sans-serif;
+  background-color: #000;
+}
+
+p, input, button {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.instructions {
+  background: red;
+  color: #fff;
+  text-align: center;
+  height: 100vh;
+}
+
+.app-container {
+  background: grey;
+  padding: 10px;
+  height: 90vh;
+  border-radius: 5px;
+}
+
+.right {
+  float: right;
+}
+
+.game-title {
+  text-align: center;
+  color: #fff;
+}
+
+.game {
+  width: 300px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.game-header {
+  background-color: #f00;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px 5px 0 0;
+  height: 20px;
+}
+
+.game-footer {
+  background-color: #0f0;
+  padding: 10px;
+  border-radius: 0 0 5px 5px;
+  min-height: 30px;
+}
+
+.game-body {
+  background-color: #00f;
+  margin: 0;
+  padding: 10px;
+}
+
+.game-body input, .game-body button {
+  text-align: center;
+  display: block;
+  padding: 0;
+  margin: 10px auto;
+  width: 80%;
+  height: 30px;
+}
+
+.guess {
+  display: inline-block;
+  color: #fff;
+  background: #00f;
+  margin-right: 5px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.guess-count {
+  font-size: 1.5em;
+  color: #ff0;
 }
