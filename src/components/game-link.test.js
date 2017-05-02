@@ -13,11 +13,11 @@ describe('<GameLink />', () => {
     const text = 'some text';
     const classes = 'class1 class2';
     const wrapper = shallow(<GameLink classes={classes} text={text} onClick="test"/>);
-    expect(wrapper.hasClass('class1')).toEqual(true);
-    expect(wrapper.hasClass('class2')).toEqual(true);
+    expect(wrapper.hasClass('class1')).toBe(true);
+    expect(wrapper.hasClass('class2')).toBe(true);
     expect(wrapper.contains(
       <a href="#" className={classes} onClick="test">{text}</a>
-    )).toEqual(true);
+    )).toBe(true);
   });
 
   it('Should run callback when clicked', () => {
