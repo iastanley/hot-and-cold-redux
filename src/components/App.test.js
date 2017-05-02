@@ -36,7 +36,6 @@ describe('<App />', () => {
 
   it('Should show instructions', () => {
     const element = mount(<App />);
-    console.log(element.find('.left a'));
     element.find('.left a').simulate('click');
     expect(element.find('Instructions').length).toEqual(1);
   });
