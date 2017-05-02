@@ -9,11 +9,22 @@ describe('<GameLink />', () => {
   });
 
   //test that an anchor tag is rendered
+  it('Should render an anchor tag', () => {
+    const text = 'some text';
+    const classes = 'class1 class2';
+    const wrapper = shallow(<GameLink classes={classes} text={text} onClick="test"/>);
+    expect(wrapper.hasClass('class1')).toEqual(true);
+    expect(wrapper.hasClass('class2')).toEqual(true);
+    expect(wrapper.contains(
+      <a href="#" className={classes} onClick="test">{text}</a>
+    )).toEqual(true);
+  });
 
-  //test that link contains text if provided as props
-
-  //test that link contains classes if provided as props
-
-  //test that
+  it('Should run callback when clicked', () => {
+    const callback = jest.fn();
+    const wrapper = shallow(<GameLink onClick={callback}/>);
+    wrapper.simulate('click');
+    expect(callback).toHaveBeenCalledTimes(1);
+  });
 
 });
