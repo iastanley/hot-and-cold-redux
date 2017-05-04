@@ -35,7 +35,7 @@ describe('<GameBody />', ()=> {
     };
     const wrapper = shallow(<GameBody />);
     const instance = wrapper.instance();
-    instance.handleChange(simEvent);
+    wrapper.find('input').simulate('change', simEvent);
     expect(wrapper.state('input')).toEqual('50');
   });
 
