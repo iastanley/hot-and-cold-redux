@@ -1,21 +1,17 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import GameLink from './game-link';
 import Instructions from './instructions';
 import GameHeader from './game-header';
 import GameBody from './game-body';
 import GameFooter from './game-footer';
 
-export default class App extends React.Component {
+import {toggleInstructions, setGuess, resetGame} from '../actions';
+
+export class App extends React.Component {
   constructor(props) {
     super(props);
-    //going to need to save all game state here
-    this.state = {
-      showInstructions: false,
-      correctNumber: this.generateCorrect(),
-      currentGuess: '',
-      prevGuesses: [],
-      feedback: 'Guess a Number!'
-    }
 
     this.toggleInstructions = this.toggleInstructions.bind(this);
     this.setGuess = this.setGuess.bind(this);
@@ -24,86 +20,23 @@ export default class App extends React.Component {
 
   //need to have method for switching between main screen and instructions
   toggleInstructions() {
-    this.setState({
-      showInstructions: !this.state.showInstructions
-    })
-  }
-
-  //need methods for updating and resetting app state
-  //generate the correctNumber
-  generateCorrect() {
-    return Math.floor(Math.random() * 100 + 1);
+    this.props.dispatch(toggleInstructions());
   }
 
   setGuess(guess) {
-    if(this.state.feedback === 'Correct!') {
-      this.resetGame();
+    if (this.props.feedback === 'Correct!') {
+      this.props.dispatch(resetGame());
     } else {
-      this.setState({
-        currentGuess: guess
-      });
-      this.generateFeedback(guess);
+      this.props.dispatch(setGuess(guess));
     }
-  }
-
-  //generate response based on user's guess
-  generateFeedback(guessNum) {
-    const num = Number(guessNum);
-
-    if(isNaN(num)) {
-      this.setState({
-        feedback: 'Not a valid input!'
-      });
-    }
-    else if(num > 100 || num <= 0) {
-      this.setState({
-        feedback: 'Number not between 1 and 100'
-      })
-    }
-    //using double equals so type of input can be string
-    else if(num === this.state.correctNumber) {
-      this.setState({
-        feedback: 'Correct!'
-      });
-    }
-    else if(Math.abs(this.state.correctNumber - num) > 10) {
-      this.addPrevGuess(num);
-      this.setState({
-        feedback: 'cold'
-      });
-    }
-    else if(Math.abs(this.state.correctNumber - num) > 5) {
-      this.addPrevGuess(num);
-      this.setState({
-        feedback: 'Warm'
-      });
-    }
-    else {
-      this.addPrevGuess(num);
-      this.setState({
-        feedback: 'Hot!'
-      });
-    }
-  }
-
-  //keep track of previous guesses
-  addPrevGuess(num) {
-    this.setState({
-      prevGuesses: [...this.state.prevGuesses, num]
-    });
   }
 
   resetGame() {
-    this.setState({
-      correctNumber: this.generateCorrect(),
-      currentGuess: '',
-      prevGuesses: [],
-      feedback: 'Guess a Number!'
-    });
+    this.props.dispatch(resetGame());
   }
 
   render() {
-    const showInstructions = this.state.showInstructions;
+    const showInstructions = this.props.showInstructions;
     if(showInstructions) {
       return <Instructions onClick={this.toggleInstructions}/>
     }
@@ -116,14 +49,23 @@ export default class App extends React.Component {
         onClick={this.resetGame} />
         <h1 className="game-title">HOT or COLD</h1>
         <div className="game">
-          <GameHeader feedback={this.state.feedback} />
+          <GameHeader feedback={this.props.feedback} />
           <GameBody
-          guessCount={this.state.prevGuesses.length}
+          guessCount={this.props.guessList.length}
           onGuess={this.setGuess}
           />
-          <GameFooter guesses={this.state.prevGuesses}/>
+          <GameFooter guesses={this.props.guessList}/>
         </div>
       </div>
     );
   }
 }//end of component
+
+const mapStateToProps = state => ({
+  correctNumber: state.correctNumber, //for debugging only
+  showInstructions: state.showInstructions,
+  guessList: state.guessList,
+  feedback: state.feedback
+});
+
+export default connect(mapStateToProps)(App);

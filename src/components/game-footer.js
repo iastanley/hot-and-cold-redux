@@ -11,7 +11,3 @@ export default function GameFooter(props) {
     </div>
   );
 }
-
-GameFooter.defaultProps = {
-  guesses: []
-}
