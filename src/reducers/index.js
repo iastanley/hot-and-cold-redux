@@ -54,7 +54,8 @@ export const hotAndColdReducer = (state = initialState, action) => {
       });
     }
   } else if (action.type === RESET_GAME) {
-    return initialState;
+    //force to make copy
+    return Object.assign({}, initialState);
   } else {
     return state;
   }
