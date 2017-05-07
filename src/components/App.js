@@ -62,7 +62,6 @@ export class App extends React.Component {
 }//end of component
 
 const mapStateToProps = state => ({
-  correctNumber: state.correctNumber, //for debugging only
   showInstructions: state.showInstructions,
   guessList: state.guessList,
   feedback: state.feedback

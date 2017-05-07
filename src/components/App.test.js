@@ -1,24 +1,67 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 
-import App from './App';
+//you want to test the unconnected (non-default) version of the component
+import {App} from './App';
+import {toggleInstructions, setGuess, resetGame} from '../actions';
 
 describe('<App />', () => {
 
   //test if app component crashes on render
   it('It should shallow render', ()=>{
-    shallow(<App />);
+    const dispatch = jest.fn();
+    shallow(<App showInstructions={false} guessList={[]} feedback={''}
+    dispatch={dispatch}/>);
   });
 
   //test that all child components are rendered
   it('Should render child components', () => {
-    const wrapper = shallow(<App/>);
+    const dispatch = jest.fn();
+    const wrapper = shallow(<App showInstructions={false} guessList={[]} feedback={''} dispatch={dispatch}/>);
     expect(wrapper.find('GameLink')).toHaveLength(2);
     expect(wrapper.find('GameHeader')).toHaveLength(1);
     expect(wrapper.find('GameBody')).toHaveLength(1);
     expect(wrapper.find('GameFooter')).toHaveLength(1);
   });
 
+  it('Should dispatch toggleInstructions from toggleInstructions', () => {
+    const dispatch = jest.fn();
+    const wrapper = shallow(<App showInstructions={false} guessList={[]} feedback={''} dispatch={dispatch}/>);
+    wrapper.instance().toggleInstructions();
+    expect(dispatch).toHaveBeenCalledWith(toggleInstructions());
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should dispatch setGame from setGame', () => {
+    const dispatch = jest.fn();
+    const guess = '10';
+    const wrapper = shallow(<App showInstructions={false} guessList={[]} feedback={''} dispatch={dispatch}/>);
+    wrapper.instance().setGuess(guess);
+    expect(dispatch).toHaveBeenCalledWith(setGuess(guess));
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should dispatch resetGame from setGame when feedback is Correct!', () => {
+    const guess = '10';
+    const correctFeedback = 'Correct!';
+    const dispatch = jest.fn();
+    const wrapper = shallow(<App showInstructions={false} guessList={[]} feedback={correctFeedback} dispatch={dispatch}/>);
+    wrapper.instance().setGuess(guess);
+    expect(dispatch).toHaveBeenCalledWith(resetGame());
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  it('Should dispatch resetGame from resetGame', () => {
+    const dispatch = jest.fn();
+    const wrapper = shallow(<App showInstructions={false} guessList={[]} feedback={''} dispatch={dispatch}/>);
+    wrapper.instance().resetGame();
+    expect(dispatch).toHaveBeenCalledWith(resetGame());
+    expect(dispatch).toHaveBeenCalledTimes(1);
+  });
+
+  //COME BACK TO THESE - ALL FAILING
+  //NOT SURE IT IS POSSIBLE OR GOOD TO TEST THESE WHEN USING REDUX?
+  
   //test toggleInstructions
   it('Should show instructions on link click', () => {
     const wrapper = mount(<App/>);
@@ -43,34 +86,5 @@ describe('<App />', () => {
     //both props are based on state.prevGuesses value
     expect(wrapper.find('GameFooter').prop('guesses')).toHaveLength(guessList.length);
     expect(wrapper.find('GameBody').prop('guessCount')).toBe(guessList.length);
-  });
-
-  it('Should give error feedback for invalid input', ()=> {
-    const errorOutOfRange = 101;
-    const errorType = 'this';
-
-    const element = shallow(<App />);
-    element.instance().setGuess(errorOutOfRange);
-    expect(element.find('GameHeader').prop('feedback')).toEqual('Number not between 1 and 100');
-    element.instance().setGuess(errorType);
-    expect(element.find('GameHeader').prop('feedback')).toEqual('Not a valid input!');
-  });
-
-  it('Should give correct feedback for valid input', () => {
-    const wrapper = shallow(<App/>);
-    wrapper.setState({
-      correctNumber: 1
-    });
-    wrapper.instance().setGuess(50);
-    expect(wrapper.find('GameHeader').prop('feedback')).toBe('cold');
-    wrapper.instance().setGuess(8);
-    expect(wrapper.find('GameHeader').prop('feedback')).toBe('Warm');
-    wrapper.instance().setGuess(2);
-    expect(wrapper.find('GameHeader').prop('feedback')).toBe('Hot!');
-    //this must go last due to behavior after correct guess
-    wrapper.instance().setGuess(1);
-    expect(wrapper.find('GameHeader').prop('feedback')).toBe('Correct!');
-
-
   });
 });
