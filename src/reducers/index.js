@@ -1,11 +1,11 @@
 import {TOGGLE_INSTRUCTIONS, SET_GUESS, RESET_GAME}
 from '../actions';
 
-function generateCorrect() {
+export function generateCorrect() {
   return Math.floor(Math.random() * 100 + 1);
 }
 
-const initialState = {
+export const initialState = {
   showInstructions: false,
   correctNumber: generateCorrect(),
   currentGuess: '',
