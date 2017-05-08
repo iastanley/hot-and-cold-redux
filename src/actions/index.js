@@ -1,3 +1,13 @@
+export const feedbackOptions = {
+  start: 'Guess a Number!',
+  cold: 'cold',
+  warm: 'Warm',
+  hot: 'Hot!',
+  correct: 'Correct!',
+  notValid: 'Not a valid input!',
+  outOfRange: 'Number not between 1 and 100'
+}
+
 //toggle Instructions
 export const TOGGLE_INSTRUCTIONS = 'TOGGLE_INSTRUCTIONS';
 export const toggleInstructions = () => ({

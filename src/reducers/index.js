@@ -1,4 +1,4 @@
-import {TOGGLE_INSTRUCTIONS, SET_GUESS, RESET_GAME}
+import {TOGGLE_INSTRUCTIONS, SET_GUESS, RESET_GAME, feedbackOptions}
 from '../actions';
 
 export function generateCorrect() {
@@ -10,7 +10,7 @@ export const initialState = {
   correctNumber: generateCorrect(),
   currentGuess: '',
   guessList: [],
-  feedback: 'Guess a Number!'
+  feedback: feedbackOptions.start
 }
 
 export const hotAndColdReducer = (state = initialState, action) => {
@@ -24,33 +24,33 @@ export const hotAndColdReducer = (state = initialState, action) => {
     const guessNum = Number(action.guess);
     if(isNaN(guessNum)) {
       return Object.assign({}, state, {
-        feedback: 'Not a valid input!'
+        feedback: feedbackOptions.notValid
       });
     } else if (guessNum > 100 || guessNum <= 0) {
       return Object.assign({}, state, {
-        feedback: 'Number not between 1 and 100'
+        feedback: feedbackOptions.outOfRange
       });
     } else if (guessNum === state.correctNumber) {
       return Object.assign({}, state, {
-        feedback: 'Correct!'
+        feedback: feedbackOptions.correct
       });
     } else if (Math.abs(state.correctNumber - guessNum) > 10) {
       return Object.assign({}, state, {
         currentGuess: guessNum,
         guessList: [...state.guessList, guessNum],
-        feedback: 'cold'
+        feedback: feedbackOptions.cold
       });
     } else if (Math.abs(state.correctNumber - guessNum) > 5) {
       return Object.assign({}, state, {
         currentGuess: guessNum,
         guessList: [...state.guessList, guessNum],
-        feedback: 'Warm'
+        feedback: feedbackOptions.warm
       });
     } else {
       return Object.assign({}, state, {
         currentGuess: guessNum,
         guessList: [...state.guessList, guessNum],
-        feedback: 'Hot!'
+        feedback: feedbackOptions.hot
       });
     }
   } else if (action.type === RESET_GAME) {

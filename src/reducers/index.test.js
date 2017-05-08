@@ -1,6 +1,6 @@
 //you need to import the helper function and initialState???
 import {hotAndColdReducer, generateCorrect, initialState} from './index';
-import {toggleInstructions, setGuess, resetGame} from '../actions';
+import {toggleInstructions, setGuess, resetGame, feedbackOptions} from '../actions';
 
 describe('hotAndColdReducer', () => {
   //set initial dummy state
@@ -9,15 +9,15 @@ describe('hotAndColdReducer', () => {
   const coldGuess = correctNumber - 15;
   const warmGuess = correctNumber - 9;
   const hotGuess = correctNumber - 4;
-  const feedbackOptions = {
-    start: 'Guess a Number!',
-    cold: 'cold',
-    warm: 'Warm',
-    hot: 'Hot!',
-    correct: 'Correct!',
-    notValid: 'Not a valid input!',
-    outOfRange: 'Number not between 1 and 100'
-  }
+  // const feedbackOptions = {
+  //   start: 'Guess a Number!',
+  //   cold: 'cold',
+  //   warm: 'Warm',
+  //   hot: 'Hot!',
+  //   correct: 'Correct!',
+  //   notValid: 'Not a valid input!',
+  //   outOfRange: 'Number not between 1 and 100'
+  // }
 
   //you might consider creating multiple state objects
   const testState = {
