@@ -9,15 +9,6 @@ describe('hotAndColdReducer', () => {
   const coldGuess = correctNumber - 15;
   const warmGuess = correctNumber - 9;
   const hotGuess = correctNumber - 4;
-  // const feedbackOptions = {
-  //   start: 'Guess a Number!',
-  //   cold: 'cold',
-  //   warm: 'Warm',
-  //   hot: 'Hot!',
-  //   correct: 'Correct!',
-  //   notValid: 'Not a valid input!',
-  //   outOfRange: 'Number not between 1 and 100'
-  // }
 
   //you might consider creating multiple state objects
   const testState = {
