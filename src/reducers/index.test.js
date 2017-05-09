@@ -28,7 +28,11 @@ describe('hotAndColdReducer', () => {
   //test resetGame with any state
   it('should reset game on resetGame action', () => {
     const newState = hotAndColdReducer(testState, resetGame());
-    expect(newState).toEqual(initialState);
+    // expect(newState).toEqual(initialState);
+    expect(typeof newState.correctNumber).toBe('number');
+    expect(newState.currentGuess).toBe('');
+    expect(newState.showInstructions).toBe(false);
+    expect(newState.feedback).toBe(feedbackOptions.start);
     expect(newState.guessList).toHaveLength(0);
   });
 
