@@ -5,7 +5,7 @@ import GameFooter from './game-footer';
 
 describe('<GameFooter />', () => {
   it('Should shallow render', () => {
-    shallow(<GameFooter />);
+    shallow(<GameFooter guesses={[1,2,3]}/>);
   });
 
   it('Should render div with class and guesses', () => {

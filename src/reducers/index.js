@@ -55,7 +55,10 @@ export const hotAndColdReducer = (state = initialState, action) => {
     }
   } else if (action.type === RESET_GAME) {
     //force to make copy
-    return Object.assign({}, initialState);
+    //force to randomly generate new correctNumber
+    return Object.assign({}, initialState, {
+      correctNumber: generateCorrect()
+    });
   } else {
     return state;
   }

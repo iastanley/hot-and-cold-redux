@@ -61,6 +61,12 @@ export class App extends React.Component {
   }
 }//end of component
 
+App.defaultProps = {
+  showInstructions: false,
+  guessList: [],
+  feedback: ''
+};
+
 const mapStateToProps = state => ({
   showInstructions: state.showInstructions,
   guessList: state.guessList,
